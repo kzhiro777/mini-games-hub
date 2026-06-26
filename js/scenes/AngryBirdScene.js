@@ -69,8 +69,10 @@ class AngryBirdScene extends Phaser.Scene {
         // Menu button
         this.createMenuButton(width - 100, 20);
 
-        // Collisions
-        this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
+        // Collisions - use arrow function to preserve 'this' context
+        this.physics.add.overlap(this.projectiles, this.enemies, (projectile, enemy) => {
+            this.hitEnemy(projectile, enemy);
+        });
     }
 
     setupLevel() {
@@ -265,6 +267,7 @@ class AngryBirdScene extends Phaser.Scene {
 
         if (projectile.skillType === 'explosion') {
             this.createExplosion(projectile.x, projectile.y, projectile.explosionRadius);
+            projectile.destroy();
         } else if (projectile.skillType === 'pierce') {
             projectile.pierceCount++;
             if (projectile.pierceCount > 2) {
@@ -273,6 +276,7 @@ class AngryBirdScene extends Phaser.Scene {
             damage = 1;
         } else if (projectile.skillType === 'flame') {
             this.createFlameEffect(projectile.x, projectile.y);
+            projectile.destroy();
             damage = 1;
         } else {
             projectile.destroy();
@@ -303,7 +307,6 @@ class AngryBirdScene extends Phaser.Scene {
         const circle = this.make.graphics({ x: x, y: y, add: false });
         circle.fillStyle(0xff6600, 0.6);
         circle.fillCircle(0, 0, radius);
-        circle.draw();
 
         this.enemies.children.entries.forEach(enemy => {
             const distance = Phaser.Math.Distance.Between(x, y, enemy.x, enemy.y);
@@ -326,7 +329,6 @@ class AngryBirdScene extends Phaser.Scene {
         const flame = this.make.graphics({ x: x, y: y, add: false });
         flame.fillStyle(0xff4400, 0.7);
         flame.fillRect(-20, -20, 40, 40);
-        flame.draw();
 
         this.time.delayedCall(300, () => flame.destroy());
     }
