@@ -27,6 +27,7 @@ class TetrisScene extends Phaser.Scene {
         this.colors = [0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0xFF00FF, 0x00FFFF, 0xFF8800];
         this.currentPiece = this.createNewPiece();
         this.gameOver = false;
+        this.needsRedraw = true;
     }
 
     create() {
@@ -83,7 +84,6 @@ class TetrisScene extends Phaser.Scene {
         });
 
         this.graphics = this.make.graphics({ x: 0, y: 0, add: false });
-        this.draw();
     }
 
     createNewPiece() {
@@ -103,7 +103,7 @@ class TetrisScene extends Phaser.Scene {
         if (!this.isValidPosition(this.currentPiece)) {
             this.currentPiece.x -= direction;
         }
-        this.draw();
+        this.needsRedraw = true;
     }
 
     dropPiece() {
@@ -118,7 +118,7 @@ class TetrisScene extends Phaser.Scene {
                 this.endGame();
             }
         }
-        this.draw();
+        this.needsRedraw = true;
     }
 
     rotatePiece() {
@@ -133,7 +133,7 @@ class TetrisScene extends Phaser.Scene {
             this.currentPiece.shape = originalShape;
             this.currentPiece.rotation = originalRotation;
         }
-        this.draw();
+        this.needsRedraw = true;
     }
 
     rotateShape(shape) {
@@ -204,6 +204,7 @@ class TetrisScene extends Phaser.Scene {
             this.scoreText.setText(`Score: ${this.score}`);
             this.levelText.setText(`Level: ${this.level}`);
             this.linesText.setText(`Lines: ${this.lines}`);
+            this.needsRedraw = true;
         }
     }
 
@@ -238,8 +239,6 @@ class TetrisScene extends Phaser.Scene {
                 }
             }
         }
-
-        this.graphics.draw();
     }
 
     endGame() {
@@ -266,5 +265,12 @@ class TetrisScene extends Phaser.Scene {
         button.on('pointerdown', () => {
             this.scene.start('MenuScene');
         });
+    }
+
+    update() {
+        if (this.needsRedraw) {
+            this.draw();
+            this.needsRedraw = false;
+        }
     }
 }
