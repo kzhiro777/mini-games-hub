@@ -7,6 +7,7 @@ class BlockBreakerScene extends Phaser.Scene {
         this.score = 0;
         this.ballsLost = 0;
         this.blocksDestroyed = 0;
+        this.gameOver = false;
     }
 
     create() {
@@ -135,7 +136,7 @@ class BlockBreakerScene extends Phaser.Scene {
 
     update() {
         // Check if ball is lost
-        if (this.balls.children.entries.length > 0) {
+        if (!this.gameOver && this.balls.children.entries.length > 0) {
             const ball = this.balls.children.entries[0];
             if (ball.y > 600) {
                 ball.destroy();
@@ -143,6 +144,7 @@ class BlockBreakerScene extends Phaser.Scene {
                 this.ballsText.setText(`Balls Lost: ${this.ballsLost}`);
 
                 if (this.ballsLost >= 3) {
+                    this.gameOver = true;
                     StorageManager.saveScore('blockBreaker', this.score);
                     this.add.text(400, 300, 'Game Over!', {
                         fontSize: '48px',
@@ -152,6 +154,7 @@ class BlockBreakerScene extends Phaser.Scene {
                     }).setOrigin(0.5);
                     this.time.delayedCall(2000, () => this.scene.start('MenuScene'));
                 } else if (this.blocks.children.entries.length === 0) {
+                    this.gameOver = true;
                     StorageManager.saveScore('blockBreaker', this.score);
                     this.add.text(400, 300, 'You Win!', {
                         fontSize: '48px',
