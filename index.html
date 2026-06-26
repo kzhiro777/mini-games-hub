@@ -10,11 +10,16 @@
 <body>
     <div id="game-container"></div>
     
+    <!-- ユーティリティを最初に読み込む -->
+    <script src="js/utils/StorageManager.js"></script>
+    
+    <!-- その後、シーンを読み込む -->
     <script src="js/scenes/MenuScene.js"></script>
     <script src="js/scenes/TetrisScene.js"></script>
     <script src="js/scenes/BlockBreakerScene.js"></script>
     <script src="js/scenes/AngryBirdScene.js"></script>
-    <script src="js/utils/StorageManager.js"></script>
+    
+    <!-- 最後に設定とメインを読み込む -->
     <script src="js/config.js"></script>
     <script src="js/main.js"></script>
 </body>
