@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+#game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    border: 3px solid #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background: #000;
+}
+
+/* UI Elements */
+.game-ui {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-weight: bold;
+    z-index: 100;
+}
+
+.score {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.level {
+    font-size: 18px;
+}
+
+.menu-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.menu-button:hover {
+    background: white;
+    transform: scale(1.05);
+}
+
+.skill-panel {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+    z-index: 100;
+}
+
+.skill-item {
+    padding: 8px;
+    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.skill-item:hover {
+    background: rgba(100, 200, 255, 0.5);
+    transform: translateX(5px);
+}
+
+.skill-item.selected {
+    background: rgba(100, 200, 255, 0.8);
+    border-left: 4px solid #64c8ff;
+}
